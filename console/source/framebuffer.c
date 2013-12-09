@@ -403,3 +403,26 @@ void consoleBackgroundColor(rgb new_bg_color)
   rgb_background = new_bg_color;
 }
 
+void printPicture(uint8_t* data, int32_t width, int32_t height)
+{
+  uint8_t* line_start = (uint8_t*)(screenbase+pitch*(cursor_pos_y*CHARSIZE_Y+height));
+  uint8_t* pixel = line_start;
+
+  cursor_pos_y += ((height-1)/CHARSIZE_Y)+1;
+  cursor_pos_x = 0;
+
+  int32_t x;
+  int32_t y;
+  for(y=0; y<height; ++y) {
+    for(x=0; x<width; ++x) {
+      *pixel = *data++; ++pixel;
+      *pixel = *data++; ++pixel;
+      *pixel = *data++; ++pixel;
+    }
+    pixel = line_start-(y*pitch);
+  }
+}
+
+
+
+

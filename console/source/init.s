@@ -9,6 +9,17 @@ font:
 fontsize:
   .int    fontsize - font
 
+@ Writes the 'pic.bmp' file into the kernel image
+  .section .rodata
+  .global pic
+  .align  4
+pic:
+  .incbin "pic.bmp"
+  .global picsize
+  .align  4
+picsize:
+  .int    picsize - pic
+
 @set address of kernel_main in raspbootin
 .global _jump_to_raspbootin 
 .balign 4

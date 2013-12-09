@@ -10,6 +10,8 @@
 
 #define WAIT_DELAY      0x7F0000
 
+extern uint8_t pic[];
+
 void writeTextInBox(const char* text)  // only one Line (don't use newlines)
 {
   uint32_t text_length = strlen(text) + 2;
@@ -19,14 +21,37 @@ void writeTextInBox(const char* text)  // only one Line (don't use newlines)
   putchar(0xC8); for(i=0; i<text_length; ++i) putchar(0xCD); putchar(0xBC); putchar('\n');
 }
 
+void printpic(void)
+{
+  //printf("pic start addr: %x\n", pic);
+  //int32_t i;
+  //for(i=0; i<54; ++i)
+    //printf("%x | ", pic[i]);
+
+  if(pic[0] != 'B' || pic[1] != 'M') {
+    printf("No BMP!!\n");
+    return;
+  }
+
+  uint32_t picdata_offset = *(uint32_t*)(pic+10);
+  int32_t pic_width  = *(uint32_t*)(pic+18);
+  int32_t pic_height = *(uint32_t*)(pic+22);
+
+  //printf("off: %u | width: %d | height: %d\n", picdata_offset, pic_width, pic_height);
+
+  printPicture(pic+picdata_offset, pic_width, pic_height);
+
+}
+
 void main(void)
 {
   uartInit();
 
-  //uint32_t fb_x = 640;
-  //uint32_t fb_y = 480;
-  //fbInit(fb_x, fb_y, COLORMODE_32BIT);
-  //setStdOutput(OUTPUT_MONITOR);
+  uint32_t fb_x = 640;
+  uint32_t fb_y = 480;
+  fbInit(fb_x, fb_y, COLORMODE_24BIT);
+  setStdOutput(OUTPUT_MONITOR);
+  printpic();
   //fbInitNativ();
 
   // change foreground/background color (example)
@@ -37,7 +62,7 @@ void main(void)
   //consoleForegroundColor(foreground);
   //consoleBackgroundColor(background);
 
-  writeTextInBox("Welcome to Martins and Manuels Shell!!");
+  //writeTextInBox("Welcome to Martins and Manuels Shell!!");
   printf("Welcome to Martins and Manuels Shell!! \n");
 /*
   printf("start address of heap: %x\n", &_heap_start);

@@ -51,6 +51,7 @@ extern void fbInit(uint32_t set_fb_x, uint32_t set_fb_y, uint32_t set_color_dept
 extern void consoleWriteChar(uint8_t ch);
 extern void consoleForegroundColor(rgb new_fg_color);
 extern void consoleBackgroundColor(rgb new_bg_color);
+extern void printPicture(uint8_t* data, int32_t width, int32_t height);
 
 
 #define GPU_MAILBOX_CHANNEL 8
