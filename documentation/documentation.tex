@@ -1,23 +1,29 @@
 %\documentclass[a4paper,10pt]{article}
 \documentclass[a4paper,10pt]{scrartcl}
 
-
-
-
-
-\usepackage{geometry}
+%\usepackage{geometry}
 \usepackage{pdflscape}
 \usepackage[utf8]{inputenc}
 %\usepackage{graphicx}
 %\usepackage{ngerman}
-\usepackage[german]{babel}
-\usepackage{epstopdf}
+%\usepackage[german]{babel}
+%\usepackage{epstopdf}
+
 \usepackage{subfigure} 
 \usepackage[pdftex]{graphicx}
 \setlength{\parindent}{0pt}
 \usepackage{listings}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+\usepackage{mathpazo}
+\usepackage{courier}
+\usepackage{geometry,url,ngerman}
+
+\usepackage[inactive]{pst-pdf}
+\usepackage{pstricks,pst-node}
+
 \title{Dokumentation Shell - Framebuffer}
-\author{Manuel Jelinek Martin Erb}
+\author{Manuel Jelinek, Martin Erb}
 \date{\today}
 
 
@@ -35,7 +41,15 @@ werden welcher den richtigen Compiler für das Raspberry installiert.
 \begin{verbatim} 
 sudo apt-get install gcc-arm-linux-gnueabihf 
 \end{verbatim}
-
+\section*{Makefile}
+Die Ordnerstruktur der folgenden Abbildung muss beibehalten werden damit
+alle targets in den Makefiles ausführbar sind. Um eine Übersicht der
+verschiedenen targets der Makefiles zu erhalten kann der Befehl \texttt{make
+help} eingegeben werden.\\
+Weiters empfehlen wird unser \texttt{raspbootin} zu verwenden, damit auch der 
+Befehl \texttt{shutdown} funktioniert.
+\newline
+\input{ordnerstructure}
 \section*{Shell}
 Damit die Shell startet und richtig initialisiert wird muss folgende
 Funktionen aufgerufen werden:
@@ -56,7 +70,8 @@ PC durch eine zweite Konsole das kernel.img neu erstellen und mit dem Befehle
 das Programm startet automatisch neu.
 Um die Shell möglichst dynamisch zu halten kann man über die Funktion
 \begin{verbatim} 
-void addNewCommand(fcn_ptr function_pointer, char command_name, char* help_text)
+void addNewCommand(fcn_ptr function_pointer, char command_name,
+     char* help_text)
 \end{verbatim}
 neue Befehle hinzufügen. Der erste Parameter ist der Pointer auf die Funktion
 welche beim Aufrufen des Befehls ausgeführt werden soll.
@@ -96,15 +111,11 @@ COLORMODE_16BIT
 COLORMODE_24BIT
 COLORMODE_32BIT
 \end{verbatim}
-
-
-
 Die minimale Auflösung des Framebuffer ist mit 640x480 Pixel und die maximale
 mit der des Monitors
 festgelegt. Wird einer der Werte überschritten bzw. unterschritten, so wird der
 jeweilige Wert auf
 das entsprechende maximum oder minimum gesetzt.
-
 Beispiel:
 \begin{verbatim} 
 fbInit(1024, 768, COLORMODE_16BIT);

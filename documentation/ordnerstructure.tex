@@ -1,0 +1,97 @@
+%\documentclass[12pt,a4paper]{article}% Walter Schmidt
+%\usepackage[T1]{fontenc}\usepackage{textcomp}
+%\usepackage{mathpazo}
+%\usepackage{courier}
+%\usepackage{geometry,url,ngerman}
+
+
+
+\parindent0pt
+
+
+\newcounter{leaves}
+\newcounter{directories}
+
+\newenvironment{directory}[2][\linewidth]%
+% Startet neues Verzeichnis 
+% und produziert eine Minipage der angeg. Breite.
+% Syntax: \begin{directory}[width]{text}
+% text muss in eine \parbox der angegebenen Breite passen;
+% wenn keine Breite angegeben ist, wird \linewidth angenommen.
+{%
+\setcounter{leaves}{0}%
+\addtocounter{directories}{1}
+\edef\directoryname{D\thedirectories}
+\begin{minipage}[t]{#1}% <-------- !!!
+  \setlength{\parindent}{\linewidth}
+  \addtolength{\parindent}{-\dirshrink\parindent}
+  \parskip0pt%
+  \noindent
+  \Rnode[href=-\dirshrink]{\directoryname}{\parbox[t]{#1}{#2}}%
+  \par
+}  
+{\end{minipage}}
+
+% !!! --> Problem:  
+% Wegen [t] stimmt der Zeilenabstand _nach_ der minipage nicht.
+% Der Referenzpunkt eines Knoten muss aber in der _ersten_ Zeile 
+% liegen, mehrzeilige Knoten, also Unterverzeichnisse, mit ihrer
+% ersten Zeile im Dateibaum verankert weren.
+
+\newcommand{\file}[2][]{%
+% Fuer einen einzelnen Eintrag innerhalb der directory-Umgebung.
+% Das Argument darf seinerseits eine directory-Umgebung sein.
+  \addtocounter{leaves}{1}%
+  \edef\leaflabel{L\theleaves\directoryname}%
+  \par
+  \Rnode{\leaflabel}{\parbox[t]{\dirshrink\linewidth}{#2\hfill#1}}%
+  \ncangle[angleA=270,angleB=180,armB=0,nodesep=1pt]
+    {\directoryname}{\leaflabel}%
+  % \typeout{\directoryname,\leaflabel}% Debugging
+\par}
+
+\newcommand{\dirshrink}{.95} 
+% relative Verringerung der Breite der Verzeichniseintraege 
+% pro Stufe
+
+
+%\begin{document}
+
+\begin{postscript}
+\begin{directory}{\url{./}}
+\file{\begin{directory}{\url{shell_only/}}
+  \file{\begin{directory}{\url{source/}}
+    \file{\begin{directory}{\url{include/}}
+    \file{\url{*.h}}
+    \end{directory}}
+    \file{\url{init.s}}
+    \file{\url{*.c}}
+  \end{directory}}
+\file{\url{kernel.ld}}
+\file{\url{Makefile}}
+\end{directory}}
+\file{\begin{directory}{\url{framebuffer/}}
+  \file{\begin{directory}{\url{source/}}
+    \file{\begin{directory}{\url{include/}}
+    \file{\url{*.h}}
+    \end{directory}}
+    \file{\url{init.s}}
+    \file{\url{font.bin}}
+    \file{\url{*.c}}
+  \end{directory}}
+\file{\url{kernel.ld}}
+\file{\url{Makefile}}
+\end{directory}}
+\file{\begin{directory}{\url{raspbootin/}}
+  \file{\begin{directory}{\url{raspbootin/}}
+         \end{directory}}
+
+    \file{\begin{directory}{\url{raspbootcom/}}
+    \end{directory}}
+    \file{\url{Makefile}}
+\end{directory}}
+\end{directory}
+\end{postscript}
+
+%\end{document}
+

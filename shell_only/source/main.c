@@ -13,7 +13,6 @@ void main(void)
 {
   char* examplemainhelptext="this is mein main function";
   addNewCommand(examplemaincommandsadd,"startmy",examplemainhelptext);
-  
   printf("Welcome to Martins and Manuels Shell!! \n");
   shell();
 }
