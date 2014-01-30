@@ -16,8 +16,7 @@
 #  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 # build environment
-PREFIX ?= $(HOME)/arm_tc/bin
-ARMGNU ?= $(PREFIX)/arm-none-eabi
+ARMGNU ?= arm-linux-gnueabihf
 
 
 # source files
@@ -33,7 +32,7 @@ DEPENDFLAGS := -MD -MP
 INCLUDES    := -I include
 BASEFLAGS   := -O2 -fpic -pedantic -pedantic-errors -nostdlib
 BASEFLAGS   += -nostartfiles -ffreestanding -nodefaultlibs
-BASEFLAGS   += -fno-builtin -fomit-frame-pointer -mcpu=arm1176jzf-s
+BASEFLAGS   += -fno-builtin -fomit-frame-pointer -marm -mfloat-abi=hard -mcpu=arm1176jzf-s
 WARNFLAGS   := -Wall -Wextra -Wshadow -Wcast-align -Wwrite-strings
 WARNFLAGS   += -Wredundant-decls -Winline
 WARNFLAGS   += -Wno-attributes -Wno-deprecated-declarations

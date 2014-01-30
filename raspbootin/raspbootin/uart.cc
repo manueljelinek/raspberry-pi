@@ -61,7 +61,7 @@ namespace UART
     UART0_ITCR   = (UART0_BASE + 0x80),
     UART0_ITIP   = (UART0_BASE + 0x84),
     UART0_ITOP   = (UART0_BASE + 0x88),
-    UART0_TDR    = (UART0_BASE + 0x8C),
+    UART0_TDR    = (UART0_BASE + 0x8C)
   };
 
   /*
