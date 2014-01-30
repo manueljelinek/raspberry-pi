@@ -1,5 +1,3 @@
-@ Writes the 'font.bin' file into the kernel image
-  .section .rodata
 
 @set address of kernel_main in raspbootin
 .global _jump_to_raspbootin 

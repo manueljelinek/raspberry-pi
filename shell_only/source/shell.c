@@ -8,7 +8,7 @@ typedef struct
   fcn_ptr command;
   char command_name[24];
   char* help_text;
-}command_struct;
+} command_struct;
 
 command_struct allcommands[MAXNUMBEROFFUNCTIONS];
 int commandcounter = 0;
@@ -18,10 +18,11 @@ void helpOutput();
 void shell(void)
 {
   uartInit();
-  addNewCommand(helpOutput,"help",0);
-  printf("Welcome to Martins and Manuels Shell!! \n");
-  
-  char* shell_prompt = "cmd>";
+  char* help_test = "print a helpoutput for all commands\n";
+  addNewCommand(helpOutput,"help",help_test);
+  printf("Starting Shell!!\n");
+
+  char* shell_prompt = "cmd> ";
   uint32_t exit = 1;
   int32_t len = 0;
   char input[64];
@@ -33,7 +34,7 @@ void shell(void)
     do
     {
       input[len] = uartGetc();
-      uartPutc(input[len]);
+      putchar(input[len]);
       if(input[len] == 0x7F){
         input[len] = 0;
         len -=2;
@@ -84,7 +85,7 @@ void helpOutput()
   printf("-----------------------------------------\n");
   printf("Helpfunction\n");
   printf("The following Commands are availabel now!\n");
-  printf("exit:\t\tclose the shell and returns to main.\n");
+  printf("exit:\t\tclose the shell and returns to main\n");
   printf("restart:\trestart the program at the mainfunction\n");
   printf("shutdown:\tclose the program and stop raspbootcom\n");
   printf("load:\t\tstart raspbootin and reload the kernel\n");
@@ -96,7 +97,7 @@ void helpOutput()
       printf("%s:\t\t%s\n",allcommands[i].command_name,allcommands[i].help_text);
     }
   }
-  
+
   printf("\n");
 } 
 

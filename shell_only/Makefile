@@ -8,8 +8,13 @@
 # The toolchain to use. arm-none-eabi works, but there does exist 
 # arm-bcm2708-linux-gnueabi.
 # make sure that the bin-folder is in the PATH-Variable!
-PREFIX ?= $(HOME)/arm_tc/bin
-ARMGNU ?= $(PREFIX)/arm-none-eabi
+
+ARMGNU ?= arm-linux-gnueabihf
+
+X = 0
+ifdef USB
+	X = $(USB)
+endif
 
 # The intermediate directory for compiled object files.
 BUILD = build/
@@ -66,6 +71,23 @@ $(BUILD)%.o: $(SOURCE)%.c
 
 $(BUILD):
 	mkdir $@
+
+raspbootcom :
+	$(MAKE) -C ../raspbootin/raspbootcom all
+
+load :
+	sudo ../raspbootin/raspbootcom/raspbootcom /dev/ttyUSB$(X) kernel.img;
+	
+help :
+	@echo ""
+	@echo "Targets  : help        - Zeigt diesen Text an."
+	@echo "           all         - Erstellt die kernel.img "
+	@echo "           clean       - Löscht alle erzeugten Files "
+	@echo "           rebuild     - Führt clean und all aus "
+	@echo "           raspbootcom - Erstellt raspbootcom "
+	@echo "           load        - Lädt das kernel.img mit raspbootcom über den USBPort 0"
+	@echo "           load USB=X  - Lädt das kernel.img mit raspbootcom über den gewünschten USBPort(X)"
+	@echo ""
 
 # Rule to clean files.
 clean : 
