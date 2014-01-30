@@ -1,4 +1,4 @@
-// Copyright (c) 2014  Martin Erb
+// Copyright (c) 2014  Manuel Jelinek
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -20,12 +20,10 @@
 
 #include <stdint.h>
 
-#ifndef UART_H
-#define UART_H
+#ifndef MAILBOX_H
+#define MAILBOX_H
 
-extern void uartInit(void);
-extern void uartPutc(uint8_t byte);
-extern uint8_t uartGetc(void);
-extern void uartPuts(const char *str);
+extern uint32_t readMailbox(uint32_t channel);
+extern void writeMailbox(uint32_t channel, uint32_t v);
 
-#endif	/* UART_H */
+#endif /* MAILBOX_H */

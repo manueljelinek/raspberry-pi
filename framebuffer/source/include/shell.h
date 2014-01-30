@@ -18,14 +18,16 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include <stdint.h>
+#ifndef SHELL_H
+#define SHELL_H
 
-#ifndef UART_H
-#define UART_H
+#define MAXNUMBEROFFUNCTIONS 32
 
-extern void uartInit(void);
-extern void uartPutc(uint8_t byte);
-extern uint8_t uartGetc(void);
-extern void uartPuts(const char *str);
+typedef void (*fcn_ptr)(void); 
 
-#endif	/* UART_H */
+extern void shell(void);
+extern void addNewCommand(fcn_ptr function_pointer, char command_name[24],char* help_text);
+
+extern void newcommandstoadd(void);
+
+#endif /* SHELL_H */

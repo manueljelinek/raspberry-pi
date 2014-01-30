@@ -1,6 +1,5 @@
 #include <stdint.h>
 
-
 uint64_t __aeabi_uidivmod(uint32_t value, uint32_t divisor)
 {
   uint64_t answer =0;
@@ -33,6 +32,5 @@ int32_t __aeabi_idiv(int32_t numerator, int32_t denominator)
 uint32_t __aeabi_uidiv(uint32_t numerator, uint32_t denominator) 
 {
   return __aeabi_uidivmod (numerator, denominator);
-  
 }
 

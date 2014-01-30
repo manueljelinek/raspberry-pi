@@ -24,13 +24,29 @@ void main(void)
   uartInit();
   char* myhelp="this is mein main function";
   addNewCommand(newcommandstoadd,"startmy",myhelp);
+
+// -----
+  // Initialise framebuffer with maximum resolution of monitor and 16bit colordepth
+  fbInitNativ();
+
+// -----
+  // Initialise framebuffer with choosen resolution:
   //uint32_t fb_x = 640;
   //uint32_t fb_y = 480;
   //fbInit(fb_x, fb_y, COLORMODE_32BIT);
-  setStdOutput(OUTPUT_MONITOR);
-  //fbInitNativ();
 
+// -----
+  // Change standard output from uart to monitor:
+  setStdOutput(OUTPUT_MONITOR);
+  //setStdOutput(OUTPUT_UART);  // set as default
+
+  // Only a small output on monitor to say hello ;)
   writeTextInBox("Welcome to Martins and Manuels Shell!!");
+
+// -----
+// Examples what you can do with the framebuffer / only working with framebuffer
+// -----
+
   // change foreground/background color (example)
   //rgb foreground = {.rgb_16.rgb = COLOR16_RED};
   //rgb background = {.rgb_16.rgb = COLOR16_YELLOW};
@@ -39,8 +55,8 @@ void main(void)
   //consoleForegroundColor(foreground);
   //consoleBackgroundColor(background);
 
-  writeTextInBox("Welcome to Martins and Manuels Shell!!");
-  printf("Welcome to Martins and Manuels Shell!! \n");
+// -----
+  // Only some examples for dynamic memory allocation:
 /*
   printf("start address of heap: %x\n", &_heap_start);
 
@@ -64,25 +80,20 @@ void main(void)
   printf("test2: %x\n", test2);
   test4 = malloc(5*sizeof(uint32_t));
   printf("test4: %x\n", test4);
-
-
-  //setStdOutput(OUTPUT_UART);
-  //printf("Monitor Resolution: X=%u / Y=%u\n",fb_x,fb_y);
-
-  // More printable signs available on monitor output ;)
-  int32_t i;
-  for(i=128;i<256;++i)
-  {
-    if(!(i & 0xF)) putchar('\n');
-    putchar(i);
-  }
-  putchar('\n');
 */
 
+
+// -----
+  // More printable signs available on monitor output ;)
+  //int32_t i;
+  //for(i=128;i<256;++i)
+  //{
+  //  if(!(i & 0xF)) putchar('\n');
+  //  putchar(i);
+  //}
+  //putchar('\n');
+
+// -----
+  // Start the shell:
   shell();
-//  printf("wieder in der main am ende\n");
-
-//  while(1)
-  //  uartPutc(uartGetc());
-
 }
